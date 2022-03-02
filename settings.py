@@ -3,6 +3,7 @@ class Settings:
     def __init__(self):
         self.LED_PIN = 18
         self.BLINK_FREQUENCY = 0.5
+        self.BUTTON_PIN = 10
 
         #flag if currently in picturemode
         self.PICTURE_MODE = False
