@@ -5,20 +5,20 @@ from button import Button
 
 import time
 
-settings = Settings.__init__()
+settings = Settings()
 
 
 #Start aquire thread
-aquire = AquireImages.__init__(settings)
+aquire = AquireImages(settings)
 aquire.start()
 
 
 #Start led thread
-status_led = Led.__init__(settings)
+status_led = Led(settings, aquire)
 status_led.start()
 
 #Start button
-button = Button.__init__(settings)
+button = Button(settings)
 button.start()
 
 time.sleep(20)
