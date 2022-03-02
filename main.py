@@ -5,6 +5,7 @@ from button import Button
 
 import time
 
+print("Starting....")
 settings = Settings()
 
 
@@ -24,6 +25,8 @@ button.start()
 time.sleep(20)
 settings.running = False
 
+print("Cleanup...")
 aquire.join()
 status_led.join()
 button.join()
+print("Finished!")
