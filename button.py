@@ -23,6 +23,7 @@ class Button(Thread):
             if GPIO.input(self.settings.BUTTON_PIN) == GPIO.HIGH:
                 if self.pressed == 0:
                     self.pressed = time.time()
+                else:
                     if time.time() - self.pressed > 2:
                         self.settings.running = False
             else:
