@@ -8,7 +8,7 @@ class Button(Thread):
         Thread.__init__(self)
         #GPIO.setwarnings(False)
         #GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.settings.BUTTON_PIN, pull_up_down=GPIO.PUD_DOWN)
+        GPIO.setup(self.settings.BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def toggle_button(self):
         self.settings.PICTURE_MODE = (False, True)[self.settings.PICTURE_MODE]
