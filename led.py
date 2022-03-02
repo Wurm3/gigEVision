@@ -5,7 +5,7 @@ from aquireimages import AquireImages
 
 class Led(Thread):
     def __init__(self, settings, aquire):
-        Thread.__init__()
+        Thread.__init__(self)
         self.aquire = aquire
         self.settings = settings
         GPIO.setmode(GPIO.BCM)
