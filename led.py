@@ -10,7 +10,7 @@ class Led(Thread):
         self.settings = settings
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
-        GPIO.setup(self.settings.LED_PIN,GPIO.OUT)
+        GPIO.setup(self.settings.LED_PIN, GPIO.OUT)
 
 
     def run(self):

@@ -22,6 +22,7 @@ status_led.start()
 button = Button(settings)
 button.start()
 
+print("waiting...")
 time.sleep(20)
 settings.running = False
 
