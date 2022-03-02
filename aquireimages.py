@@ -15,6 +15,7 @@ class AquireImages(threading.Thread):
     def __init__(self, settings):
         threading.Thread.__init__(self)
         self.settings = settings
+        print("initalized thread")
 
     def save_image(self, img, n):
         if not os.path.exists(self.settings.INFRARED_IMAGES_PATH):
@@ -26,6 +27,7 @@ class AquireImages(threading.Thread):
         Image.fromarray(img).save(os.path.join(self.settings.INFRARED_IMAGES_PATH, n + ".png"))
 
     def run(self):
+        print("Aquire running")
         img = pylon.PylonImage()
         tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
@@ -89,3 +91,4 @@ class AquireImages(threading.Thread):
 
         #Wait until pictures needs to be taken
         time.sleep(1)
+        print("quitting aquire")
