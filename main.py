@@ -22,11 +22,7 @@ status_led.start()
 button = Button(settings)
 button.start()
 
-print("waiting...")
-time.sleep(20)
-settings.running = False
-
-print("Cleanup...")
+print("waiting for cleanup...")
 aquire.join()
 status_led.join()
 button.join()
