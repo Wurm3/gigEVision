@@ -14,7 +14,7 @@ class Button(Thread):
         GPIO.setup(self.settings.BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
     def toggle_button(self):
-        print("toggle mode")
+        print("toggle mode: " + str(self.settings.PICTURE_MODE))
         self.settings.PICTURE_MODE = (False, True)[self.settings.PICTURE_MODE]
 
     def run(self):
