@@ -15,7 +15,10 @@ class Button(Thread):
 
     def toggle_button(self):
         print("toggle mode: " + str(self.settings.PICTURE_MODE))
-        self.settings.PICTURE_MODE = (False, True)[self.settings.PICTURE_MODE]
+        if self.settings.PICTURE_MODE:
+            self.settings.PICTURE_MODE = False
+        else:
+            self.settings.PICTURE_MODE = True
 
     def run(self):
         while self.settings.running:
