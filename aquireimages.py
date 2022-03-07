@@ -79,10 +79,10 @@ class AquireImages(threading.Thread):
                                 quality = 70
                                 ipo.SetQuality(quality)
 
-                                filename = "basler_%d.jpeg" % file_ending
+                                filename = "basler_%s.jpeg" % file_ending
                                 img.Save(pylon.ImageFileFormat_Jpeg, self.settings.VISIBLE_IMAGES_PATH + filename, ipo)
                             else:
-                                filename = "basler_%d.png" % file_ending
+                                filename = "basler_%s.png" % file_ending
                                 img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
 
                             # In order to make it possible to reuse the grab result for grabbing
