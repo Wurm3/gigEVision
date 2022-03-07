@@ -2,6 +2,7 @@ from pypylon import pylon
 from simple_pyspin import Camera
 from datetime import datetime
 from PIL import Image
+import PySpin
 
 from settings import Settings
 import threading
@@ -26,12 +27,19 @@ class AquireImages(threading.Thread):
         # Save them
         Image.fromarray(img).save(os.path.join(self.settings.INFRARED_IMAGES_PATH, n + ".png"))
 
+
     def run(self):
         print("Aquire running")
         img = pylon.PylonImage()
         tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
+                ### Test code delete later
+                system = PySpin.System.GetInstance()
+                cam_list = system.GetCameras()
+                print(cam_list)
+
+
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
 
