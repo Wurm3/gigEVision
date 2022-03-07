@@ -40,8 +40,29 @@ class AquireImages(threading.Thread):
                     print("ID: " + str(ID))
                     print("Cam: " + str(c))
 
+                camPtr = cam_list.GetByIndex(0)
+                camPtr.Init()
 
-                #cam = pylon.InstantCamera(tlf.CreateFirstDevice())
+                try:
+                    result = 0
+                    nodemap = camPtr.GetTLDeviceNodeMap()
+                    nodeDeviceInformation = PySpin.CCategoryPtr(nodemap.GetNode('DeviceInformation'))
+                    if PySpin.IsAvailable(nodeDeviceInformation) and PySpin.IsReadable(nodeDeviceInformation):
+                        print('*** DEVICE INFORMATION ***\n')
+                        features = nodeDeviceInformation.GetFeatures()
+                        for feature in features:
+                            node_feature = PySpin.CValuePtr(feature)
+                            print('%s: %s' % (node_feature.GetName(),
+                                              node_feature.ToString() if PySpin.IsReadable(
+                                                  node_feature) else 'Node not readable'))
+                    else:
+                        print('Device control information not available.')
+                except PySpin.SpinnakerException as ex:
+                    print('Error: %s' % ex)
+                    result = -1
+
+
+                    #cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 #cam.Open()
 
                 with Camera() as flir_cam:
