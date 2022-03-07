@@ -36,8 +36,7 @@ class AquireImages(threading.Thread):
             if self.settings.PICTURE_MODE:
                 ### Test code delete later
                 system = PySpin.System.GetInstance()
-                cam_list = system.GetCameras()
-                print(cam_list)
+                print(len(system.GetCameras()))
 
 
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
