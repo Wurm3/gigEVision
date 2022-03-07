@@ -30,19 +30,13 @@ class AquireImages(threading.Thread):
 
     def run(self):
         print("Aquire running")
-        img = pylon.PylonImage()
-        tlf = pylon.TlFactory.GetInstance()
+        #img = pylon.PylonImage()
+        #tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
-                ### Test code delete later
-                system = PySpin.System.GetInstance()
-                cam_list = system.GetCameras()
-                print(len(cam_list))
-                for c in cam_list:
-                    print(c)
 
-                cam = pylon.InstantCamera(tlf.CreateFirstDevice())
-                cam.Open()
+                #cam = pylon.InstantCamera(tlf.CreateFirstDevice())
+                #cam.Open()
 
                 with Camera() as flir_cam:
                     flir_cam.PixelFormat = "Mono8"
@@ -60,11 +54,11 @@ class AquireImages(threading.Thread):
                         file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
                         #Get flir Image
 
-                        cam.StartGrabbing()
+                        #cam.StartGrabbing()
                         flir_cam.start()
                         flir_array = flir_cam.get_array()
                         flir_cam.stop()
-
+                        """
                         #Get Basler Image
                         with cam.RetrieveResult(2000) as result:
 
@@ -92,7 +86,7 @@ class AquireImages(threading.Thread):
 
                         #save images and repeat
                         cam.StopGrabbing()
-
+                        """
                         self.save_image(flir_array, "flir_" + file_ending)
                         time.sleep(self.settings.IMAGE_PAUSE)
 
