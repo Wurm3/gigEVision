@@ -34,6 +34,9 @@ class AquireImages(threading.Thread):
         #tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
+                system = PySpin.System.GetInstance()
+                print(len(system.GetCameras()))
+
 
                 #cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 #cam.Open()
