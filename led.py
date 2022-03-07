@@ -23,6 +23,7 @@ class Led(Thread):
                     time.sleep(self.settings.BLINK_FREQUENCY)
             else:
                 GPIO.output(self.settings.LED_PIN, GPIO.LOW)
-                time.sleep(self.settings.BLINK_FREQUENCY * 2)
+                time.sleep(self.settings.BLINK_FREQUENCY * 3)
                 GPIO.output(self.settings.LED_PIN, GPIO.HIGH)
                 time.sleep(self.settings.BLINK_FREQUENCY)
+        GPIO.output(self.settings.LED_PIN, GPIO.LOW)
