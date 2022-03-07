@@ -35,7 +35,10 @@ class AquireImages(threading.Thread):
         while self.settings.running:
             if self.settings.PICTURE_MODE:
                 system = PySpin.System.GetInstance()
-                print(len(system.GetCameras()))
+                cam_list = system.GetCameras()
+                for ID, c in enumerate(cam_list):
+                    print("ID: " + str(ID))
+                    print("Cam: " + str(c))
 
 
                 #cam = pylon.InstantCamera(tlf.CreateFirstDevice())
