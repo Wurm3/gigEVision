@@ -33,6 +33,18 @@ class AquireImages(threading.Thread):
         tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
+                system = PySpin.System.GetInstance()
+                cam_list = system.GetCameras()
+                for ID, c in enumerate(cam_list):
+                    camPtr = cam_list.GetByIndex(0)
+                    camPtr.Init()
+                    try:
+                        result = 0
+                        nodemap = camPtr.GetTLDeviceNodeMap()
+                    except PySpin.SpinnakerException as ex:
+                        print('Error: %s' % ex)
+                        result = -1
+
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
                 cam.GevSCPSPacketSize.SetValue(1500)
