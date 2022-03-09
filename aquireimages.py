@@ -30,10 +30,11 @@ class AquireImages(threading.Thread):
 
     def run(self):
         print("Aquire running")
-        #img = pylon.PylonImage()
-        #tlf = pylon.TlFactory.GetInstance()
+        img = pylon.PylonImage()
+        tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
+                """
                 system = PySpin.System.GetInstance()
                 cam_list = system.GetCameras()
                 for ID, c in enumerate(cam_list):
@@ -42,7 +43,7 @@ class AquireImages(threading.Thread):
 
                 camPtr = cam_list.GetByIndex(0)
                 camPtr.Init()
-
+                
                 try:
                     result = 0
                     nodemap = camPtr.GetTLDeviceNodeMap()
@@ -60,11 +61,40 @@ class AquireImages(threading.Thread):
                 except PySpin.SpinnakerException as ex:
                     print('Error: %s' % ex)
                     result = -1
+                """
 
+                cam = pylon.InstantCamera(tlf.CreateFirstDevice())
+                cam.Open()
 
-                    #cam = pylon.InstantCamera(tlf.CreateFirstDevice())
-                #cam.Open()
+                while self.settings.PICTURE_MODE:
+                    # Get Basler Image
+                    with cam.RetrieveResult(2000) as result:
 
+                        # Calling AttachGrabResultBuffer creates another reference to the
+                        # grab result buffer. This prevents the buffer's reuse for grabbing.
+                        img.AttachGrabResultBuffer(result)
+
+                        if platform.system() == 'Windows':
+                            # The JPEG format that is used here supports adjusting the image
+                            # quality (100 -> best quality, 0 -> poor quality).
+                            ipo = pylon.ImagePersistenceOptions()
+                            quality = 70
+                            ipo.SetQuality(quality)
+
+                            filename = "basler_%s.jpeg" % file_ending
+                            img.Save(pylon.ImageFileFormat_Jpeg, self.settings.VISIBLE_IMAGES_PATH + filename, ipo)
+                        else:
+                            filename = "basler_%s.png" % file_ending
+                            img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
+
+                        # In order to make it possible to reuse the grab result for grabbing
+                        # again, we have to release the image (effectively emptying the
+                        # image object).
+                        img.Release()
+
+                    # save images and repeat
+                    cam.StopGrabbing()
+                """
                 with Camera() as flir_cam:
                     flir_cam.PixelFormat = "Mono8"
 
@@ -85,7 +115,7 @@ class AquireImages(threading.Thread):
                         flir_cam.start()
                         flir_array = flir_cam.get_array()
                         flir_cam.stop()
-                        """
+                    
                         #Get Basler Image
                         with cam.RetrieveResult(2000) as result:
 
@@ -113,11 +143,11 @@ class AquireImages(threading.Thread):
 
                         #save images and repeat
                         cam.StopGrabbing()
-                        """
+                    
                         self.save_image(flir_array, "flir_" + file_ending)
                         time.sleep(self.settings.IMAGE_PAUSE)
-
-                #cam.close()
+                """
+                cam.close()
 
         #Wait until pictures needs to be taken
         time.sleep(1)
