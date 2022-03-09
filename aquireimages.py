@@ -77,6 +77,19 @@ class AquireImages(threading.Thread):
                     flir_cam.GevSCPSPacketSize = 1500
                     flir_cam.GevSCPD = 2000
 
+                    try:
+                        result = True
+                        if flir_cam.TLDevice.DeviceSerialNumber.GetAccessMode() == PySpin.RO:
+                            print("Device serial number: %s" % flir_cam.TLDevice.DeviceSerialNumber.ToString())
+                        else:
+                            print("Device serial number: unavailable")
+
+                        if PySpin.IsReadable(flir_cam.TLDevice.DeviceDisplayName):
+                            print("Device display name: %s" % flir_cam.TLDevice.DeviceDisplayName.ToString())
+                        else:
+                            print("Device display name: unavailable")
+                    except PySpin.SpinnakerException as ex:
+                        print("Error: %s" % ex)
 
 
                     print('Recording...')
