@@ -91,7 +91,7 @@ class AquireImages(threading.Thread):
                         self.save_image(flir_array, "flir_" + file_ending)
                         time.sleep(self.settings.IMAGE_PAUSE)
 
-                cam.close()
+                #cam.close()
 
         #Wait until pictures needs to be taken
         time.sleep(1)
