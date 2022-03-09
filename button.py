@@ -22,7 +22,7 @@ class Button(Thread):
 
     def run(self):
         while self.settings.running:
-            time.sleep(0.001)
+            time.sleep(0.050)
             #print(GPIO.input(self.settings.BUTTON_PIN))
             if GPIO.input(self.settings.BUTTON_PIN) == GPIO.HIGH:
                 if self.pressed == 0:
