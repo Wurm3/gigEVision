@@ -37,6 +37,7 @@ class AquireImages(threading.Thread):
                 cam.Open()
                 cam.GevSCPSPacketSize.SetValue(1500)
                 cam.GevSCPD.SetValue(2000)
+                """
                 while self.settings.PICTURE_MODE:
                     timestamp = datetime.now()
                     file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
@@ -72,14 +73,21 @@ class AquireImages(threading.Thread):
                     flir_cam.Width = flir_cam.SensorWidth
                     flir_cam.Height = flir_cam.SensorHeight
 
+                    #Testing
+                    flir_cam.GevSCPSPacketSize = 1500
+                    flir_cam.GevSCPD = 2000
+
+
+
                     print('Recording...')
 
                     while self.settings.PICTURE_MODE:
                         timestamp = datetime.now()
                         file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
-                        # Get flir Image
 
                         cam.StartGrabbing()
+
+                        # Get flir Image
                         flir_cam.start()
                         flir_array = flir_cam.get_array()
                         flir_cam.stop()
@@ -87,22 +95,16 @@ class AquireImages(threading.Thread):
                         # Get Basler Image
                         with cam.RetrieveResult(2000) as result:
 
+                            if not result.GrabSucceeded():
+                                print(result.ErrorCode)
+                                print(result.ErrorDescription)
+
                             # Calling AttachGrabResultBuffer creates another reference to the
                             # grab result buffer. This prevents the buffer's reuse for grabbing.
                             img.AttachGrabResultBuffer(result)
 
-                            if platform.system() == 'Windows':
-                                # The JPEG format that is used here supports adjusting the image
-                                # quality (100 -> best quality, 0 -> poor quality).
-                                ipo = pylon.ImagePersistenceOptions()
-                                quality = 70
-                                ipo.SetQuality(quality)
-
-                                filename = "basler_%s.jpeg" % file_ending
-                                img.Save(pylon.ImageFileFormat_Jpeg, self.settings.VISIBLE_IMAGES_PATH + filename, ipo)
-                            else:
-                                filename = "basler_%s.png" % file_ending
-                                img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
+                            filename = "basler_%s.png" % file_ending
+                            img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
 
                             # In order to make it possible to reuse the grab result for grabbing
                             # again, we have to release the image (effectively emptying the
@@ -117,7 +119,7 @@ class AquireImages(threading.Thread):
                         time.sleep(self.settings.IMAGE_PAUSE)
 
                 #cam.close()
-                """
+
         #Wait until pictures needs to be taken
         time.sleep(1)
         print("quitting aquire")
