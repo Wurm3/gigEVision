@@ -35,6 +35,8 @@ class AquireImages(threading.Thread):
             if self.settings.PICTURE_MODE:
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
+                cam.GevSCPSPacketSize.SetValue(1500)
+                cam.GevSCPD.SetValue(2000)
                 while self.settings.PICTURE_MODE:
                     timestamp = datetime.now()
                     file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
