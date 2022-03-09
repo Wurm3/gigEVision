@@ -45,18 +45,9 @@ class AquireImages(threading.Thread):
                         # grab result buffer. This prevents the buffer's reuse for grabbing.
                         img.AttachGrabResultBuffer(result)
 
-                        if platform.system() == 'Windows':
-                            # The JPEG format that is used here supports adjusting the image
-                            # quality (100 -> best quality, 0 -> poor quality).
-                            ipo = pylon.ImagePersistenceOptions()
-                            quality = 70
-                            ipo.SetQuality(quality)
 
-                            filename = "basler_%s.jpeg" % file_ending
-                            img.Save(pylon.ImageFileFormat_Jpeg, self.settings.VISIBLE_IMAGES_PATH + filename, ipo)
-                        else:
-                            filename = "basler_%s.png" % file_ending
-                            img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
+                        filename = "basler_%s.png" % file_ending
+                        img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
 
                         # In order to make it possible to reuse the grab result for grabbing
                         # again, we have to release the image (effectively emptying the
