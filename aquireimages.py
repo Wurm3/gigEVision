@@ -37,6 +37,8 @@ class AquireImages(threading.Thread):
                 cam_list = system.GetCameras()
                 for ID, c in enumerate(cam_list):
                     camPtr = cam_list.GetByIndex(0)
+                    print(id)
+                    print(c)
                     camPtr.Init()
                     try:
                         result = 0
