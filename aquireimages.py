@@ -27,47 +27,18 @@ class AquireImages(threading.Thread):
         # Save them
         Image.fromarray(img).save(os.path.join(self.settings.INFRARED_IMAGES_PATH, n + ".png"))
 
-
     def run(self):
         print("Aquire running")
         img = pylon.PylonImage()
         tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
-                """
-                system = PySpin.System.GetInstance()
-                cam_list = system.GetCameras()
-                for ID, c in enumerate(cam_list):
-                    print("ID: " + str(ID))
-                    print("Cam: " + str(c))
-
-                camPtr = cam_list.GetByIndex(0)
-                camPtr.Init()
-                
-                try:
-                    result = 0
-                    nodemap = camPtr.GetTLDeviceNodeMap()
-                    nodeDeviceInformation = PySpin.CCategoryPtr(nodemap.GetNode('DeviceInformation'))
-                    if PySpin.IsAvailable(nodeDeviceInformation) and PySpin.IsReadable(nodeDeviceInformation):
-                        print('*** DEVICE INFORMATION ***\n')
-                        features = nodeDeviceInformation.GetFeatures()
-                        for feature in features:
-                            node_feature = PySpin.CValuePtr(feature)
-                            print('%s: %s' % (node_feature.GetName(),
-                                              node_feature.ToString() if PySpin.IsReadable(
-                                                  node_feature) else 'Node not readable'))
-                    else:
-                        print('Device control information not available.')
-                except PySpin.SpinnakerException as ex:
-                    print('Error: %s' % ex)
-                    result = -1
-                """
-
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
-
                 while self.settings.PICTURE_MODE:
-                    # Get Basler Image
+                    timestamp = datetime.now()
+                    file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
+                    cam.StartGrabbing()
                     with cam.RetrieveResult(2000) as result:
 
                         # Calling AttachGrabResultBuffer creates another reference to the
@@ -93,7 +64,9 @@ class AquireImages(threading.Thread):
                         img.Release()
 
                     # save images and repeat
+                    # save images and repeat
                     cam.StopGrabbing()
+
                 """
                 with Camera() as flir_cam:
                     flir_cam.PixelFormat = "Mono8"
@@ -109,14 +82,14 @@ class AquireImages(threading.Thread):
                     while self.settings.PICTURE_MODE:
                         timestamp = datetime.now()
                         file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
-                        #Get flir Image
+                        # Get flir Image
 
-                        #cam.StartGrabbing()
+                        cam.StartGrabbing()
                         flir_cam.start()
                         flir_array = flir_cam.get_array()
                         flir_cam.stop()
-                    
-                        #Get Basler Image
+
+                        # Get Basler Image
                         with cam.RetrieveResult(2000) as result:
 
                             # Calling AttachGrabResultBuffer creates another reference to the
@@ -142,13 +115,14 @@ class AquireImages(threading.Thread):
                             img.Release()
 
                         #save images and repeat
+                            # save images and repeat
                         cam.StopGrabbing()
-                    
+
                         self.save_image(flir_array, "flir_" + file_ending)
                         time.sleep(self.settings.IMAGE_PAUSE)
-                """
-                cam.close()
 
+                #cam.close()
+                """
         #Wait until pictures needs to be taken
         time.sleep(1)
         print("quitting aquire")
