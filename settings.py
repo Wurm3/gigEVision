@@ -12,7 +12,7 @@ class Settings:
         self.running = True
 
         #How many seconds to pause between images
-        self.IMAGE_PAUSE = 3
+        self.IMAGE_PAUSE = 1.5
 
         #path to visible images
         self.VISIBLE_IMAGES_PATH = "images/visible_images/"
