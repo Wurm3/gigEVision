@@ -38,13 +38,15 @@ class AquireImages(threading.Thread):
                 while self.settings.PICTURE_MODE:
                     timestamp = datetime.now()
                     file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
-                    cam.StartGrabbing()
+                    cam.StartGrabbingMax(1)
                     with cam.RetrieveResult(2000) as result:
 
                         # Calling AttachGrabResultBuffer creates another reference to the
                         # grab result buffer. This prevents the buffer's reuse for grabbing.
                         img.AttachGrabResultBuffer(result)
-
+                        print(result.GrabSucceeded())
+                        print(result.ErrorCode)
+                        print(result.ErrorDescription)
 
                         filename = "basler_%s.png" % file_ending
                         img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
