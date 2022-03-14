@@ -42,7 +42,7 @@ class AquireImages(threading.Thread):
         while self.settings.running:
             if self.settings.PICTURE_MODE:
                 #Initiate Sensor
-                map_result = []
+                map_result = {}
                 map_result["valid"] = False
                 dht11 = RetrieveDHT11(self.settings)
 
