@@ -32,7 +32,7 @@ class AquireImages(threading.Thread):
         with open(self.settings.SENSOR_DATA_PATH, 'a+') as f:
             temp = map["temperature"]
             hum = map["humidity"]
-            str = "%s, %-3.1f, %-3.1f\n" % timestamp, temp, hum
+            str = "%s, %-3.1f, %-3.1f\n" % (timestamp, temp, hum)
             f.write(str)
 
     def run(self):
