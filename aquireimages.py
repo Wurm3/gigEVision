@@ -42,8 +42,8 @@ class AquireImages(threading.Thread):
         while self.settings.running:
             if self.settings.PICTURE_MODE:
                 #Initiate Sensor
-                map_result = {}
-                map_result["valid"] = False
+                result_map = {}
+                result_map["valid"] = False
                 dht11 = RetrieveDHT11(self.settings)
 
 
@@ -79,7 +79,7 @@ class AquireImages(threading.Thread):
                             result_map = tmp_map_result
                         else:
                             if result_map["valid"]:
-                                self.save_data(map_result, file_ending)
+                                self.save_data(result_map, file_ending)
                                 result_map = tmp_map_result
                             else:
                                 skip = True
