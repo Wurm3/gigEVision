@@ -116,9 +116,10 @@ class AquireImages(threading.Thread):
                             cam.StopGrabbing()
 
                             self.save_image(flir_array, "flir_" + file_ending)
-                            time.sleep(self.settings.IMAGE_PAUSE)
                         else:
                             print("Skipped taking pictures")
+
+                        time.sleep(self.settings.IMAGE_PAUSE)
 
                 #cam.close()
 
