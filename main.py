@@ -2,8 +2,8 @@ from aquireimages import AquireImages
 from settings import Settings
 from led import Led
 from button import Button
-import RPi.GPIO as GPIO
 
+import RPi.GPIO as GPIO
 import time
 
 print("Starting....")
