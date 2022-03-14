@@ -32,7 +32,7 @@ class AquireImages(threading.Thread):
         with open(self.settings.SENSOR_DATA_PATH, 'a+') as f:
             temp = map["temperature"]
             hum = map["humidity"]
-            str = timestamp + ", " + str(temp) + ", " + str(temp)
+            str = "%s, %-3.1f, %-3.1f\n" % timestamp, temp, hum
             f.write(str)
 
     def run(self):
@@ -75,14 +75,12 @@ class AquireImages(threading.Thread):
 
                         tmp_map_result = dht11.get_data()
                         if tmp_map_result["valid"]:
-                            self.save_data(tmp_map_result, timestamp)
+                            self.save_data(tmp_map_result, file_ending)
                             result_map = tmp_map_result
-                            skip = False
                         else:
                             if result_map["valid"]:
-                                self.save_data(map_result, timestamp)
+                                self.save_data(map_result, file_ending)
                                 result_map = tmp_map_result
-                                skip = False
                             else:
                                 skip = True
 
