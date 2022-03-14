@@ -2,11 +2,16 @@ from settings import Settings
 from aquireimages import AquireImages
 from retrievedht11 import RetrieveDHT11
 from button import Button
+import RPi.GPIO as GPIO
 
 import time
 
 print("Starting....")
 settings = Settings()
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
 button = Button(settings)
 
 button.start()
