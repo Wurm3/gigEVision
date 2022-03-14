@@ -8,13 +8,23 @@ print("Starting....")
 settings = Settings()
 
 dht11 = RetrieveDHT11(settings)
-result_map = dht11.get_data()
-if result_map["valid"]:
-    print("Temperature: " + str(result_map["temperature"]))
-    print("Humidity: " + str(result_map["humidity"]))
-else:
-    print("No results obtained")
-    print(result_map)
+
+retrieve = True
+counter = 0
+
+while(retrieve):
+    result_map = dht11.get_data()
+
+    if result_map["valid"]:
+        print("Temperature: " + str(result_map["temperature"]))
+        print("Humidity: " + str(result_map["humidity"]))
+    else:
+        print("No results obtained")
+        print(result_map)
+    time.sleep(settings.IMAGE_PAUSE + 1.5)
+    counter += 1
+    if counter >= 20:
+        retrieve = False
 
 """
 #Start aquire thread
