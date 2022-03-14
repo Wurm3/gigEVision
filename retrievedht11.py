@@ -11,7 +11,7 @@ class RetrieveDHT11:
     def get_data(self):
         result_map = {}
         instance = DHT11(pin = self.settings.SENSOR_PIN)
-        result = innstance.read()
+        result = instance.read()
         if result.isValid():
             result_map["valid"] = True
             result_map["temperature"] = result.temperature
