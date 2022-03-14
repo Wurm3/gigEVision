@@ -4,9 +4,6 @@ from dht11.dht11 import DHT11
 class RetrieveDHT11:
     def __init__(self, settings):
         self.settings = settings
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.cleanup()
 
     def get_data(self):
         result_map = {}

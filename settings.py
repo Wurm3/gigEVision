@@ -21,4 +21,7 @@ class Settings:
         #path to infrared images
         self.INFRARED_IMAGES_PATH = "images/thermal_images/"
 
+        #file to sensor data
+        self.SENSOR_DATA_PATH = "images/sensor_data.csv"
+
 

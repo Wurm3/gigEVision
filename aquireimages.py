@@ -2,9 +2,10 @@ from pypylon import pylon
 from simple_pyspin import Camera
 from datetime import datetime
 from PIL import Image
-import PySpin
-
 from settings import Settings
+from retrievedht11 import RetrieveDHT11
+
+import PySpin
 import threading
 import platform
 import os
@@ -27,13 +28,26 @@ class AquireImages(threading.Thread):
         # Save them
         Image.fromarray(img).save(os.path.join(self.settings.INFRARED_IMAGES_PATH, n + ".png"))
 
+    def save_data(self, map, timestamp):
+        with open(self.settings.SENSOR_DATA_PATH, 'a+') as f:
+            temp = map["temperature"]
+            hum = map["humidity"]
+            str = "%s, %-3.1f, %-3.1f\n" % timestamp, temp, hum
+            f.write(str)
+
     def run(self):
         print("Aquire running")
         img = pylon.PylonImage()
         tlf = pylon.TlFactory.GetInstance()
         while self.settings.running:
             if self.settings.PICTURE_MODE:
+                #Initiate Sensor
+                map_result = []
+                map_result["valid"] = False
+                dht11 = RetrieveDHT11(self.settings)
 
+
+                #Initiate Basler camera
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
                 cam.GevSCPSPacketSize.SetValue(1500)
@@ -57,39 +71,56 @@ class AquireImages(threading.Thread):
                     while self.settings.PICTURE_MODE:
                         timestamp = datetime.now()
                         file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
+                        skip = False
 
-                        cam.StartGrabbing()
+                        tmp_map_result = dht11.get_data()
+                        if tmp_map_result["valid"]:
+                            self.save_data(tmp_map_result, timestamp)
+                            result_map = tmp_map_result
+                            skip = False
+                        else:
+                            if result_map["valid"]:
+                                self.save_data(map_result, timestamp)
+                                result_map = tmp_map_result
+                                skip = False
+                            else:
+                                skip = True
 
-                        # Get flir Image
-                        flir_cam.start()
-                        flir_array = flir_cam.get_array()
-                        flir_cam.stop()
+                        if not skip:
+                            cam.StartGrabbing()
 
-                        # Get Basler Image
-                        with cam.RetrieveResult(2000) as result:
+                            # Get flir Image
+                            flir_cam.start()
+                            flir_array = flir_cam.get_array()
+                            flir_cam.stop()
 
-                            if not result.GrabSucceeded():
-                                print(result.ErrorCode)
-                                print(result.ErrorDescription)
+                            # Get Basler Image
+                            with cam.RetrieveResult(2000) as result:
 
-                            # Calling AttachGrabResultBuffer creates another reference to the
-                            # grab result buffer. This prevents the buffer's reuse for grabbing.
-                            img.AttachGrabResultBuffer(result)
+                                if not result.GrabSucceeded():
+                                    print(result.ErrorCode)
+                                    print(result.ErrorDescription)
 
-                            filename = "basler_%s.png" % file_ending
-                            img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
+                                # Calling AttachGrabResultBuffer creates another reference to the
+                                # grab result buffer. This prevents the buffer's reuse for grabbing.
+                                img.AttachGrabResultBuffer(result)
 
-                            # In order to make it possible to reuse the grab result for grabbing
-                            # again, we have to release the image (effectively emptying the
-                            # image object).
-                            img.Release()
+                                filename = "basler_%s.png" % file_ending
+                                img.Save(pylon.ImageFileFormat_Png, self.settings.VISIBLE_IMAGES_PATH + filename)
 
-                        #save images and repeat
-                        # save images and repeat
-                        cam.StopGrabbing()
+                                # In order to make it possible to reuse the grab result for grabbing
+                                # again, we have to release the image (effectively emptying the
+                                # image object).
+                                img.Release()
 
-                        self.save_image(flir_array, "flir_" + file_ending)
-                        time.sleep(self.settings.IMAGE_PAUSE)
+                            #save images and repeat
+                            # save images and repeat
+                            cam.StopGrabbing()
+
+                            self.save_image(flir_array, "flir_" + file_ending)
+                            time.sleep(self.settings.IMAGE_PAUSE)
+                        else:
+                            print("Skipped taking pictures")
 
                 #cam.close()
 

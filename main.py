@@ -2,12 +2,15 @@ from aquireimages import AquireImages
 from settings import Settings
 from led import Led
 from button import Button
+from RPi.GPIO as GPIO
 
 import time
 
 print("Starting....")
 settings = Settings()
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 #Start aquire thread
 aquire = AquireImages(settings)
@@ -26,4 +29,5 @@ print("waiting for cleanup...")
 aquire.join()
 status_led.join()
 button.join()
+GPIO.cleanup()
 print("Finished!")

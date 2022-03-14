@@ -8,8 +8,6 @@ class Led(Thread):
         Thread.__init__(self)
         self.aquire = aquire
         self.settings = settings
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
         GPIO.setup(self.settings.LED_PIN, GPIO.OUT)
 
 
