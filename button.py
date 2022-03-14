@@ -23,7 +23,7 @@ class Button(Thread):
     def run(self):
         while self.settings.running:
             print("waiting")
-            time.sleep(0.050)
+            time.sleep(0.030)
             print(GPIO.input(self.settings.BUTTON_PIN))
             if GPIO.input(self.settings.BUTTON_PIN) == GPIO.HIGH:
                 print("on")
