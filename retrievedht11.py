@@ -4,7 +4,7 @@ from dht11.dht11 import DHT11
 class RetrieveDHT11:
     def __init__(self, settings):
         self.settings = settings
-        self.last_result = {}
+        self.last_result = {"valid": False}
 
     def get_data(self):
         result_map = {}
