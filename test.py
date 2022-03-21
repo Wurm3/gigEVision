@@ -11,7 +11,7 @@ settings = Settings()
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-
+"""
 button = Button(settings)
 
 button.start()
@@ -39,7 +39,7 @@ while(retrieve):
     counter += 1
     if counter >= 20:
         retrieve = False
-"""
+
 
 """
 #Start aquire thread
