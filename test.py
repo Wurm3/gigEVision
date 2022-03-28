@@ -37,6 +37,7 @@ while(retrieve):
     if result_map["valid"]:
         print("Temperature: " + str(result_map["temperature"]))
         print("Humidity: " + str(result_map["humidity"]))
+        print("Humidity: {}%".format(result_map["humidity"]))
     else:
         print("No results obtained")
         print(result_map)
