@@ -15,6 +15,7 @@ class DHT22:
             result_map["valid"] = True
             result_map["temperature"] = instance.temperature
             tmp = instance.humidity
+            print("Value:")
             print(tmp)
             result_map["humidity"] = tmp
             self.last_result = result_map
