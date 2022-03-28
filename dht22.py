@@ -10,7 +10,7 @@ class DHT22:
 
     def get_data(self):
         result_map = {}
-        instance = adafruit_dht.DHT22(self.settings.SENSOR_PIN, use_pulseio=False)
+        instance = adafruit_dht.DHT22(board.D4, use_pulseio=False)
         try:
             result_map["valid"] = True
             result_map["temperature"] = instance.temperature
