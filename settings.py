@@ -1,10 +1,12 @@
+import board
+
 class Settings:
 
     def __init__(self):
         self.LED_PIN = 18
         self.BLINK_FREQUENCY = 0.5
         self.BUTTON_PIN = 15
-        self.SENSOR_PIN = 4
+        self.SENSOR_PIN = board.D4 #Pin number 4
 
         #flag if currently in picturemode
         self.PICTURE_MODE = False
