@@ -15,6 +15,7 @@ import adafruit_dht
 # This may be necessary on a Linux single board computer like the Raspberry Pi,
 # but it will not work in CircuitPython.
 dhtDevice = adafruit_dht.DHT22(board.D4, use_pulseio=False)
+print(board.D4)
 
 while True:
     try:
