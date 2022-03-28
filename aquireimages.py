@@ -3,7 +3,7 @@ from simple_pyspin import Camera
 from datetime import datetime
 from PIL import Image
 from settings import Settings
-from retrievedht11 import RetrieveDHT11
+from dht22 import DHT22
 
 import PySpin
 import threading
@@ -44,7 +44,7 @@ class AquireImages(threading.Thread):
                 #Initiate Sensor
                 result_map = {}
                 result_map["valid"] = False
-                dht11 = RetrieveDHT11(self.settings)
+                dht22 = DHT22(self.settings)
 
 
                 #Initiate Basler camera
@@ -73,7 +73,7 @@ class AquireImages(threading.Thread):
                         file_ending = timestamp.strftime("%Y-%m-%d-%H%M%S")
                         skip = False
 
-                        tmp_map_result = dht11.get_data()
+                        tmp_map_result = dht22.get_data()
                         if tmp_map_result["valid"]:
                             self.save_data(tmp_map_result, file_ending)
                             result_map = tmp_map_result
