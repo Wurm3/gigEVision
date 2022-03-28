@@ -41,7 +41,7 @@ while(retrieve):
         print(result_map)
     time.sleep(settings.IMAGE_PAUSE + 1.5)
     counter += 1
-    if counter >= 20:
+    if counter >= 10:
         retrieve = False
 
 dhtDevice = adafruit_dht.DHT22(settings.SENSOR_PIN, use_pulseio=False)
