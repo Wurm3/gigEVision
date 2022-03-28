@@ -5,6 +5,7 @@ from button import Button
 import RPi.GPIO as GPIO
 import time
 import adafruit_dht
+import board
 
 
 print("Starting....")
@@ -44,8 +45,7 @@ while(retrieve):
     if counter >= 10:
         retrieve = False
 
-dhtDevice = adafruit_dht.DHT22(settings.SENSOR_PIN, use_pulseio=False)
-
+dhtDevice = adafruit_dht.DHT22(board.D4, use_pulseio=False)
 while True:
     try:
         # Print the values to the serial port
