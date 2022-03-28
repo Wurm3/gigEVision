@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 import time
 import adafruit_dht
 import board
+from dht22 import DHT22
 
 
 print("Starting....")
@@ -26,7 +27,7 @@ button.join()
 
 """
 
-dht11 = RetrieveDHT11(settings)
+dht11 = DHT22(settings)
 
 retrieve = True
 counter = 0
