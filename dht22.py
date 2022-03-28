@@ -14,7 +14,9 @@ class DHT22:
         try:
             result_map["valid"] = True
             result_map["temperature"] = instance.temperature
-            result_map["humidity"] = instance.humidity
+            tmp = instance.humidity
+            print(tmp)
+            result_map["humidity"] = tmp
             self.last_result = result_map
         except RuntimeError as error:
             result_map["valid"] = False

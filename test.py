@@ -35,6 +35,16 @@ while(retrieve):
     result_map = dht11.get_data()
 
     if result_map["valid"]:
+        temperature_c = result_map["temperature"]
+        temperature_f = temperature_c * (9 / 5) + 32
+        humidity = result_map["humidity"]
+
+
+        print(
+            "Temp: {:.1f} F / {:.1f} C    Humidity: {}% ".format(
+                temperature_f, temperature_c, humidity
+            )
+        )
         print("Temperature: " + str(result_map["temperature"]))
         print("Humidity: " + str(result_map["humidity"]))
         print("Humidity: {}%".format(result_map["humidity"]))
