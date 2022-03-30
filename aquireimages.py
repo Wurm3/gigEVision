@@ -60,7 +60,7 @@ class AquireImages(threading.Thread):
                     flir_cam.OffsetX = 0
                     flir_cam.OffsetY = 0
                     flir_cam.Width = flir_cam.SensorWidth
-                    flir_cam.Height = flir_cam.SensorHeight
+                    flir_cam.Height = 256#flir_cam.SensorHeight
                     print("Width: %s", str(flir_cam.Width))
                     print("Height: %s", str(flir_cam.Height))
 
@@ -85,7 +85,7 @@ class AquireImages(threading.Thread):
                                 result_map = tmp_map_result
                             else:
                                 skip = True
-
+                        skip = False
                         if not skip:
                             cam.StartGrabbing()
 
