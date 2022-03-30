@@ -61,6 +61,8 @@ class AquireImages(threading.Thread):
                     flir_cam.OffsetY = 0
                     flir_cam.Width = flir_cam.SensorWidth
                     flir_cam.Height = flir_cam.SensorHeight
+                    print("Width: %s", str(flir_cam.Width))
+                    print("Height: %s", str(flir_cam.Height))
 
                     #Testing
                     flir_cam.GevSCPSPacketSize = 1500
