@@ -50,8 +50,10 @@ class AquireImages(threading.Thread):
                 #Initiate Basler camera
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
+                print("Setting value")
                 cam.GevSCPSPacketSize.SetValue(1500)
                 cam.GevSCPD.SetValue(2000)
+                print("Value Set")
 
                 with Camera() as flir_cam:
                     flir_cam.PixelFormat = "Mono8"
@@ -85,6 +87,7 @@ class AquireImages(threading.Thread):
                                 result_map = tmp_map_result
                             else:
                                 skip = True
+                                print("Could not read sensor")
                         skip = False
                         if not skip:
                             cam.StartGrabbing()
