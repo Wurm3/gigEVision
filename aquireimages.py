@@ -52,7 +52,7 @@ class AquireImages(threading.Thread):
                 cam.Open()
                 print("Setting value")
                 cam.GevSCPSPacketSize.SetValue(1500)
-                cam.GevSCPD.SetValue(2500)
+                cam.GevSCPD.SetValue(3000)
                 print("Value Set")
 
                 with Camera() as flir_cam:
