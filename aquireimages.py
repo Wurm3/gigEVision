@@ -51,7 +51,7 @@ class AquireImages(threading.Thread):
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
                 print("Setting value")
-                cam.GevSCPSPacketSize.SetValue(1500)
+                cam.GevSCPSPacketSize.SetValue(1400)
                 cam.GevSCPD.SetValue(1500)
                 print("Value Set")
 
