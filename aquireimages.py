@@ -51,8 +51,8 @@ class AquireImages(threading.Thread):
                 cam = pylon.InstantCamera(tlf.CreateFirstDevice())
                 cam.Open()
                 print("Setting value")
-                cam.GevSCPSPacketSize.SetValue(1400)
-                cam.GevSCPD.SetValue(1500)
+                cam.GevSCPSPacketSize.SetValue(1500)
+                cam.GevSCPD.SetValue(2000)
                 print("Value Set")
 
                 with Camera() as flir_cam:
@@ -81,6 +81,7 @@ class AquireImages(threading.Thread):
                         if tmp_map_result["valid"]:
                             self.save_data(tmp_map_result, file_ending)
                             result_map = tmp_map_result
+                            print(tmp_map_result)
                         else:
                             if result_map["valid"]:
                                 self.save_data(result_map, file_ending)
@@ -98,7 +99,7 @@ class AquireImages(threading.Thread):
                             flir_cam.stop()
 
                             # Get Basler Image
-                            with cam.RetrieveResult(10000) as result:
+                            with cam.RetrieveResult(2000) as result:
 
                                 if not result.GrabSucceeded():
                                     print(result.ErrorCode)
