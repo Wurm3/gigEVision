@@ -89,7 +89,6 @@ class AquireImages(threading.Thread):
                             else:
                                 skip = True
                                 print("Could not read sensor")
-                        skip = False
                         if not skip:
                             cam.StartGrabbing()
 
