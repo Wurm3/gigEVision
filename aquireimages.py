@@ -98,7 +98,7 @@ class AquireImages(threading.Thread):
                             flir_cam.stop()
 
                             # Get Basler Image
-                            with cam.RetrieveResult(2500) as result:
+                            with cam.RetrieveResult(10000) as result:
 
                                 if not result.GrabSucceeded():
                                     print(result.ErrorCode)
