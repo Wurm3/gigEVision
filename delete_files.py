@@ -3,7 +3,7 @@ from settings import Settings
 
 
 def delete_folder_content(folder):
-    for filename in os.listdir("./" + folder):
+    for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
         try:
             if os.path.isfile(file_path) or os.path.islink(file_path):
@@ -13,7 +13,7 @@ def delete_folder_content(folder):
 
 
 def delete_sensor_data(path):
-    os.remove("./" + path)
+    os.remove(path)
 
 
 settings = Settings()
