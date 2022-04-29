@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 from threading import Thread
 
 import time
+import os
 
 class Button(Thread):
 
@@ -27,13 +28,16 @@ class Button(Thread):
                 if self.pressed == 0:
                     self.pressed = time.time()
                 else:
-                    if time.time() - self.pressed > 2:
-                        self.settings.running = False
+                    if time.time() - self.pressed > 5:
+                        self.settings.FLASHING = True
             else:
                 if self.pressed != 0:
                     duration = time.time() - self.pressed
                     self.pressed = 0
-                    if duration > 2:
+                    if 2 < duration < 5:
                         self.settings.running = False
+                    elif duration > 5:
+                        self.settings.running = False
+                        os.system("bash -c \"sleep 10; shutdown -h now\"")
                     else:
                         self.toggle_button()

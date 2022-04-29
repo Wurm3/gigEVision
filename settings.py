@@ -26,4 +26,6 @@ class Settings:
         #file to sensor data
         self.SENSOR_DATA_PATH = "images/sensor_data.csv"
 
+        self.FLASHING = False
+
 

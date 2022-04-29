@@ -13,15 +13,21 @@ class Led(Thread):
 
     def run(self):
         while self.settings.running:
-            if self.aquire.is_alive():
+            if self.settings.FLASHING:
                 GPIO.output(self.settings.LED_PIN, GPIO.HIGH)
-                time.sleep(self.settings.BLINK_FREQUENCY)
-                if not self.settings.PICTURE_MODE:
-                    GPIO.output(self.settings.LED_PIN, GPIO.LOW)
-                    time.sleep(self.settings.BLINK_FREQUENCY)
-            else:
+                time.sleep(self.settings.BLINK_FREQUENCY / 4)
                 GPIO.output(self.settings.LED_PIN, GPIO.LOW)
-                time.sleep(self.settings.BLINK_FREQUENCY * 3)
-                GPIO.output(self.settings.LED_PIN, GPIO.HIGH)
-                time.sleep(self.settings.BLINK_FREQUENCY)
-        GPIO.output(self.settings.LED_PIN, GPIO.LOW)
+                time.sleep(self.settings.BLINK_FREQUENCY / 4)
+            else:
+                if self.aquire.is_alive():
+                    GPIO.output(self.settings.LED_PIN, GPIO.HIGH)
+                    time.sleep(self.settings.BLINK_FREQUENCY)
+                    if not self.settings.PICTURE_MODE:
+                        GPIO.output(self.settings.LED_PIN, GPIO.LOW)
+                        time.sleep(self.settings.BLINK_FREQUENCY)
+                else:
+                    GPIO.output(self.settings.LED_PIN, GPIO.LOW)
+                    time.sleep(self.settings.BLINK_FREQUENCY * 3)
+                    GPIO.output(self.settings.LED_PIN, GPIO.HIGH)
+                    time.sleep(self.settings.BLINK_FREQUENCY)
+            GPIO.output(self.settings.LED_PIN, GPIO.LOW)
