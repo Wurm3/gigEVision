@@ -28,15 +28,15 @@ class Button(Thread):
                 if self.pressed == 0:
                     self.pressed = time.time()
                 else:
-                    if time.time() - self.pressed > 5:
+                    if time.time() - self.pressed > 6:
                         self.settings.FLASHING = True
             else:
                 if self.pressed != 0:
                     duration = time.time() - self.pressed
                     self.pressed = 0
-                    if 2 < duration < 5:
+                    if 2 < duration < 6:
                         self.settings.running = False
-                    elif duration > 5:
+                    elif duration > 6:
                         self.settings.running = False
                         os.system("bash -c \"sleep 10; shutdown -h now\"")
                     else:
