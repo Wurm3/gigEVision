@@ -18,13 +18,13 @@ class Settings:
         self.IMAGE_PAUSE = 0.5
 
         #path to visible images
-        self.VISIBLE_IMAGES_PATH = "images/visible_images/"
+        self.VISIBLE_IMAGES_PATH = "home/ubuntu/software/gigEVision/images/visible_images/"
 
         #path to infrared images
-        self.INFRARED_IMAGES_PATH = "images/thermal_images/"
+        self.INFRARED_IMAGES_PATH = "home/ubuntu/software/gigEVision/images/thermal_images/"
 
         #file to sensor data
-        self.SENSOR_DATA_PATH = "images/sensor_data.csv"
+        self.SENSOR_DATA_PATH = "home/ubuntu/software/gigEVision/images/sensor_data.csv"
 
         self.FLASHING = False
 
